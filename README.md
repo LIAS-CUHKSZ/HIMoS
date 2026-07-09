@@ -22,6 +22,8 @@ The global planner selects promising reef regions under the remaining time budge
   <img src="fig/himos.gif" alt="HIMoS simulation dashboard" width="580">
 </p>
 
+Full demo video: [Bilibili](https://www.bilibili.com/video/BV19bMH63ES2/)
+
 ## Data and Maps
 
 <table>
