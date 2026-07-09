@@ -3,7 +3,7 @@
 HIMoS is the codebase for **Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling**. It simulates an AUV searching for sparse coral targets on fixed-altitude reef maps, using a hierarchical planner that combines long-horizon region selection with short-horizon multi-modal sensing and sampling.
 
 <p align="center">
-  <img src="fig/introduction.png" alt="HIMoS motivation and overview" width="860">
+  <img src="fig/introduction.png" alt="HIMoS motivation and overview" width="560">
 </p>
 
 ## Project Overview
@@ -26,7 +26,7 @@ The robot runs in a closed loop: sense, update belief, locally replan, and reque
 **Simulation and performance**
 
 <p align="center">
-  <img src="fig/himos.gif" alt="HIMoS simulation dashboard" width="780">
+  <img src="fig/himos.gif" alt="HIMoS simulation dashboard" width="580">
 </p>
 
 **Field data and planning maps**
@@ -137,15 +137,9 @@ The saved files include:
 
 Most experiment knobs are in [param.py](param.py):
 
-- `CELL_SIZE`: map resolution in meters per cell.
 - `FLS_RANGE`, `FLS_FOV_DEG`: sonar range and field of view.
 - `FLC_RANGE`, `FLC_FOV_DEG`: forward camera range and field of view.
 - `DLC_FOOTPRINT`: down-looking confirmation footprint size.
-- `MAX_VELOCITY`, `MAX_ANGULAR_VELOCITY`: AUV control limits.
-- `PLANNING_TIMESTEP_SIZE`: local-planner timestep.
-- `NEXEC`: number of local controls executed before replanning.
-- `GRID_TIME_SEC`: conversion from global-grid transitions to local time budget.
-- `GlobalPlannerConfig`: global graph spacing, UCB exploration weight, GP settings, and node splitting threshold.
 - `SHOW_VIS`, `RECORD_FRAMES`, `OUTPUT_DIR`: visualization and logging options.
 
 The total mission budget is set from the command line in [main_game.py](main_game.py), then converted to the global-planner path budget with:
@@ -153,13 +147,6 @@ The total mission budget is set from the command line in [main_game.py](main_gam
 ```python
 path_budget = TOTAL_TIME_BUDGET_SECS / GRID_TIME_SEC
 ```
-
-## Notes for Development
-
-- The autonomous mode is `game.run_planner_HIMoS()` in [main_game.py](main_game.py).
-- Manual control support exists through `game.run_manual()` and `simulation/input_controller.py`, but the default entry point runs the autonomous planner.
-- If you change map resolution or map size, check `CELL_SIZE`, `GlobalPlannerConfig.grid_interval_m`, and the map path logic in `main_game.py`.
-- If local optimization is slow, first reduce `N_INFO`, increase entropy-map downsampling, or shorten the mission budget for debugging.
 
 ## Paper
 
