@@ -1,6 +1,6 @@
 # HIMoS
 
-HIMoS is the codebase for **Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling**. It simulates a fixed-altitude AUV searching for sparse coral targets with multi-modal sensing and hierarchical global-local planning.
+HIMoS is the codebase for **Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling**. It simulates a fixed-altitude AUV searching for sparse coral targets with multi-modal sensing and hierarchical global-local planning. Full demo video: [Bilibili](https://www.bilibili.com/video/BV19bMH63ES2/)
 
 <p align="center">
   <img src="fig/introduction.png" alt="HIMoS motivation and overview" width="560">
@@ -22,7 +22,6 @@ The global planner selects promising reef regions under the remaining time budge
   <img src="fig/himos.gif" alt="HIMoS simulation dashboard" width="580">
 </p>
 
-Full demo video: [Bilibili](https://www.bilibili.com/video/BV19bMH63ES2/)
 
 ## Data and Maps
 
