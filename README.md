@@ -10,24 +10,20 @@ The project entry point is [main_game.py](main_game.py). Core experiment and pla
 
 ## Project Overview
 
-HIMoS targets sparse benthic search-and-sampling missions, where exhaustive coverage is inefficient and high-altitude visual search is unreliable in turbid water. The simulator models a fixed-altitude AUV with three sensing modalities:
+HIMoS targets sparse benthic search-and-sampling missions where exhaustive coverage is inefficient and high-altitude vision is unreliable. The simulator models a fixed-altitude AUV with three sensing modalities:
 
 - **FLS**: forward-looking sonar for long-range substrate scouting.
 - **FLC**: front-looking camera for mid-range coral target scouting.
 - **DLC**: down-looking camera for close-range deterministic target confirmation.
 
-The planner has two layers:
+The planner is hierarchical:
 
-- **Global Planner**: builds an adaptive topological planning graph, estimates promising hard-substrate regions from the substrate belief map, and solves an orienteering-style routing problem under the remaining time budget.
-- **Local Planner**: runs receding-horizon trajectory optimization with differentiable belief dynamics, balancing substrate exploration, target search, and close-range coral confirmation.
+- **Global Planner**: selects promising regions by solving an orienteering-style routing problem over the substrate belief map.
+- **Local Planner**: optimizes short-horizon trajectories that trade off sonar exploration, visual target search, and DLC confirmation.
 
-During execution, the robot repeatedly observes the map, updates its belief, replans locally every few control steps, and asks the global planner for a new region once the current target region is reached.
+The robot runs in a closed loop: sense, update belief, locally replan, and request a new global target when the current region is reached.
 
 ## Visuals
-
-**System overview**
-
-![HIMoS system overview](fig/system_overview.png)
 
 **Simulation and performance**
 
