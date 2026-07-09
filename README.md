@@ -52,7 +52,7 @@ The robot runs in a closed loop: sense, update belief, locally replan, and reque
 .
 ├── main_game.py        # Main simulator and autonomous planning loop
 ├── param.py            # Sensor, robot, planner, visualization, and logging parameters
-├── himos.yml           # Minimal conda environment file
+├── himos.yml           # Conda environment file with runtime dependencies
 ├── planner/
 │   ├── global_planner.py      # Adaptive global planner and OP target selection
 │   ├── local_planner.py       # CasADi-based local trajectory optimizer
@@ -71,24 +71,33 @@ The robot runs in a closed loop: sense, update belief, locally replan, and reque
 
 ## Installation
 
-Create the base environment from the provided conda file:
+Create the environment from the provided conda file:
 
 ```bash
 conda env create -f himos.yml
 conda activate ml
 ```
 
-Install the Python packages used by the simulator and planners:
+The environment file includes the packages used by the simulator and planners:
+`numpy`, `pygame`, `matplotlib`, `scikit-learn`, `numba`, and `casadi`.
+You can verify the installation with:
 
 ```bash
-pip install numpy pygame matplotlib scikit-learn numba casadi
+python -c "import numpy, pygame, matplotlib, sklearn, numba, casadi; print('HIMoS dependencies OK')"
 ```
 
-The code is written for Python 3.8. `casadi` is required by the local nonlinear optimizer, `numba` accelerates the orienteering solver, and `pygame` provides the simulator dashboard.
+If the `ml` environment already exists, update it instead:
+
+```bash
+conda env update -f himos.yml --prune
+conda activate ml
+```
+
+The code is written for Python 3.8. `casadi` is required by the local nonlinear optimizer, `numba` accelerates the orienteering solver, `scikit-learn` provides the Gaussian-process utilities used by the global planner, and `pygame` provides the simulator dashboard.
 
 ## Quick Start
 
-The project entry point is [main_game.py](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/main_game.py). Core experiment and planner parameters are collected in [param.py](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/param.py). Map data and map-generation details are described separately in [map/README.md](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/map/README.md).
+The project entry point is [main_game.py](main_game.py). Core experiment and planner parameters are collected in [param.py](param.py). Map data and map-generation details are described separately in [map/README.md](map/README.md).
 
 Run the default autonomous HIMoS simulation:
 
@@ -115,6 +124,26 @@ Arguments:
 - `-start_pose`: selects one of four corner start poses, indexed `0` to `3`.
 
 While the Pygame window is open, press `G` to toggle the global-planner interest-grid overlay. After a run ends, press `Q`, `Esc`, or close the window to exit.
+
+## Headless or Batch Runs
+
+For non-interactive runs, edit [param.py](param.py):
+
+```python
+SHOW_VIS = False
+```
+
+When `SHOW_VIS` is disabled, `main_game.py` sets the SDL video driver to `dummy`, so the simulator can run without opening a display window. `pygame` is still required because the simulator uses Pygame surfaces for rendering and saving output images.
+
+## Troubleshooting
+
+If you see `ModuleNotFoundError`, make sure the conda environment is active:
+
+```bash
+conda activate ml
+```
+
+If `python` is not found before activation, use the command only after activating the conda environment. The default run expects the included map file at `map/planning_maps/Area_2_map_1/map.npy`.
 
 ## Outputs
 
