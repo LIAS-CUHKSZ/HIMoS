@@ -72,7 +72,6 @@ Arguments:
 - `-map_index`: selects `map/planning_maps/Area_2_map_<index>/map.npy`.
 - `-start_pose`: selects one of four corner start poses, indexed `0` to `3`.
 
-Press `G` to toggle the global-planner interest-grid overlay. Press `Q`, `Esc`, or close the Pygame window to exit after a run ends.
 
 For non-interactive runs, set `SHOW_VIS = False` in [param.py](param.py). Frame sequences are saved only when `RECORD_FRAMES = True`.
 
