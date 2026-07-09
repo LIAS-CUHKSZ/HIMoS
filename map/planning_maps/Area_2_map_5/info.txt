@@ -1,0 +1,14 @@
+=== Processing Statistics ===
+Class mapping: 0=Sand, 1=Rock, 2=Coral
+Rank map index: 5
+Source candidate index: 5
+Total pixels: 40000 (each pixel = 0.25m x 0.25m = 0.0625m^2)
+Sand: 12027 (30.1%)
+Rock: 26275 (65.7%)
+Corals: 1698 (4.2%) - 1698 corals total
+Original resolution: 0.1m/pixel -> Downsampled to: 0.25m/pixel (factor 2.5)
+Total area covered: 2500.0 m^2
+Range X(pixel): (400, 900)
+Range Y(pixel): (2000, 2500)
+Range X(m): 40.0 - 90.0
+Range Y(m): 200.0 - 250.0

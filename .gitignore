@@ -1,0 +1,10 @@
+map/real_map
+map/demo_map
+planner/local_planner_map
+__pycache__/
+experiment_results/
+*.pyc
+.DS_Store
+.vscode/
+map/demo_50m
+map/planning_maps_demo
