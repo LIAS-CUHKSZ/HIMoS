@@ -2,8 +2,6 @@
 
 HIMoS is the codebase for **Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling**. It simulates an AUV searching for sparse coral targets on fixed-altitude reef maps, using a hierarchical planner that combines long-horizon region selection with short-horizon multi-modal sensing and sampling.
 
-The project entry point is [main_game.py](main_game.py). Core experiment and planner parameters are collected in [param.py](param.py). Map data and map-generation details are described separately in [map/README.md](map/README.md).
-
 <p align="center">
   <img src="fig/introduction.png" alt="HIMoS motivation and overview" width="860">
 </p>
@@ -27,20 +25,9 @@ The robot runs in a closed loop: sense, update belief, locally replan, and reque
 
 **Simulation and performance**
 
-<table>
-  <tr>
-    <td width="50%" align="center">
-      <img src="fig/himos.gif" alt="HIMoS simulation dashboard">
-    </td>
-    <td width="50%" align="center">
-      <img src="fig/performance_confirmation_ratio.png" alt="Target confirmation ratio">
-    </td>
-  </tr>
-  <tr>
-    <td align="center">HIMoS simulation dashboard</td>
-    <td align="center">Target confirmation ratio</td>
-  </tr>
-</table>
+<p align="center">
+  <img src="fig/himos.gif" alt="HIMoS simulation dashboard" width="780">
+</p>
 
 **Field data and planning maps**
 
@@ -101,6 +88,8 @@ The code is written for Python 3.8. `casadi` is required by the local nonlinear 
 
 ## Quick Start
 
+The project entry point is [main_game.py](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/main_game.py). Core experiment and planner parameters are collected in [param.py](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/param.py). Map data and map-generation details are described separately in [map/README.md](https://github.com/LIAS-CUHKSZ/HIMoS/blob/main/map/README.md).
+
 Run the default autonomous HIMoS simulation:
 
 ```bash
@@ -127,15 +116,22 @@ Arguments:
 
 While the Pygame window is open, press `G` to toggle the global-planner interest-grid overlay. After a run ends, press `Q`, `Esc`, or close the window to exit.
 
-## Headless or Batch Runs
+## Outputs
 
-For non-interactive runs, edit [param.py](param.py):
+Each run creates an experiment folder under `experiment_results/`, named like:
 
-```python
-SHOW_VIS = False
+```text
+experiment_results/exp_map<map_index>_start<start_pose>_budget<budget>_<timestamp>/
 ```
 
-When `SHOW_VIS` is disabled, `main_game.py` sets the SDL video driver to `dummy`, so the simulator can run without opening a display window.
+The saved files include:
+
+- `summary.txt`: final confirmation ratio, path length, final pose, and run metadata.
+- `coral_timeseries.csv`: confirmed-coral count and robot pose over simulated time.
+- `trajectory.npy` and `trajectory.txt`: executed robot trajectory.
+- `gt_with_trajectory.png`: ground-truth map with executed trajectory.
+- `simulation_observed.png`: final observed map.
+- `frames/`, `frames_full_observed/`, `frames_global_planner/`: optional frame outputs, saved only when `RECORD_FRAMES = True` in [param.py](param.py).
 
 ## Important Parameters
 
@@ -158,39 +154,6 @@ The total mission budget is set from the command line in [main_game.py](main_gam
 path_budget = TOTAL_TIME_BUDGET_SECS / GRID_TIME_SEC
 ```
 
-## Maps
-
-Planning maps are stored as `.npy` grids with three classes:
-
-- `0`: sand / traversable background
-- `1`: rock or hard substrate
-- `2`: coral target
-
-The default runner currently expects maps under:
-
-```text
-map/planning_maps/Area_2_map_<index>/map.npy
-```
-
-For details about the source dataset, class conversion, and how to generate new planning maps, see [map/README.md](map/README.md).
-
-## Outputs
-
-Each run creates an experiment folder under `experiment_results/`, named like:
-
-```text
-experiment_results/exp_map<map_index>_start<start_pose>_budget<budget>_<timestamp>/
-```
-
-The saved files include:
-
-- `summary.txt`: final confirmation ratio, path length, final pose, and run metadata.
-- `coral_timeseries.csv`: confirmed-coral count and robot pose over simulated time.
-- `trajectory.npy` and `trajectory.txt`: executed robot trajectory.
-- `gt_with_trajectory.png`: ground-truth map with executed trajectory.
-- `simulation_observed.png`: final observed map.
-- `frames/`, `frames_full_observed/`, `frames_global_planner/`: optional frame outputs when `RECORD_FRAMES = True`.
-
 ## Notes for Development
 
 - The autonomous mode is `game.run_planner_HIMoS()` in [main_game.py](main_game.py).
@@ -200,8 +163,14 @@ The saved files include:
 
 ## Paper
 
-This repository accompanies:
-
-**Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling**
-
-The paper PDF is included in this repository as [Hierarchical_Multi_Modal_Planning_for_Fixed_Altitude_Sparse_Target_Search_and_Sampling.pdf](Hierarchical_Multi_Modal_Planning_for_Fixed_Altitude_Sparse_Target_Search_and_Sampling.pdf).
+```bibtex
+@misc{chen2026hierarchicalmultimodalplanningfixedaltitude,
+      title={Hierarchical Multi-Modal Planning for Fixed-Altitude Sparse Target Search and Sampling}, 
+      author={Lingpeng Chen and Yuchen Zheng and Apple Pui-Yi Chui and Junfeng Wu and Ziyang Hong},
+      year={2026},
+      eprint={2603.08336},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2603.08336}, 
+}
+```
